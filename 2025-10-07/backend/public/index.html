@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat em Tempo Real - Persistente</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Modal de Login -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <h2>🚀 Entre no Chat</h2>
+      <form id="loginForm">
+        <div class="input-group">
+          <label for="usernameInput">Nome de Usuário</label>
+          <input 
+            type="text" 
+            id="usernameInput" 
+            placeholder="Digite seu nome..."
+            maxlength="50"
+            required
+            autocomplete="off"
+          >
+        </div>
+        <div class="input-group">
+          <label for="roomInput">Sala</label>
+          <select id="roomInput">
+            <option value="general">💬 Geral</option>
+            <option value="tech">💻 Tecnologia</option>
+            <option value="random">🎲 Aleatório</option>
+            <option value="help">❓ Ajuda</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Entrar no Chat</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Interface do Chat -->
+  <div id="chatContainer" style="display: none;">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="header-left">
+        <h1>💬 Chat em Tempo Real</h1>
+        <span id="roomName" class="room-badge">Sala: Geral</span>
+      </div>
+      <div class="header-right">
+        <span id="onlineCount" class="online-indicator">
+          <span class="pulse"></span>
+          <span id="onlineNumber">0</span> online
+        </span>
+      </div>
+    </div>
+
+    <div class="chat-layout">
+      <!-- Sidebar com usuários online -->
+      <aside class="sidebar">
+        <h3>👥 Online (<span id="userCount">0</span>)</h3>
+        <ul id="usersList" class="users-list"></ul>
+      </aside>
+
+      <!-- Área principal do chat -->
+      <main class="chat-main">
+        <!-- Área de mensagens -->
+        <div id="messagesContainer" class="messages-container">
+          <div class="loading-history" id="loadingHistory">
+            <div class="spinner"></div>
+            <p>Carregando histórico...</p>
+          </div>
+        </div>
+
+        <!-- Indicador de digitação -->
+        <div id="typingIndicator" class="typing-indicator" style="display: none;">
+          <span class="typing-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          <span id="typingText"></span>
+        </div>
+
+        <!-- Formulário de envio -->
+        <form id="messageForm" class="message-form">
+          <input 
+            type="text" 
+            id="messageInput" 
+            placeholder="Digite sua mensagem..."
+            maxlength="1000"
+            autocomplete="off"
+            disabled
+          >
+          <button type="submit" id="sendButton" class="btn btn-send" disabled>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast para notificações -->
+  <div id="toast" class="toast"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>
